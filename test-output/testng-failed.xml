@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Failed suite [ERP_OCTS_Automation]">
+  <test name="WebService_Automation(failed)">
+    <parameter name="GIInterfaceFile" value="C:\Users\rrama3\Desktop\Oracle_Cloud_Automation\Latest_Code\Oracle_Cloud_Automation\ERP_OracleFusion_Final\GlInterface.zip"/>
+    <parameter name="testFile" value="C:\Users\rrama3\Desktop\Oracle_Cloud_Automation\Latest_Code\Oracle_Cloud_Automation\ERP_OracleFusion_Final\ERP_InputDatasheet.xlsx"/>
+    <classes>
+      <class name="OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass">
+        <methods>
+          <include name="tearDown"/>
+          <include name="OracleCloud_Financial_Webservices" invocation-numbers="0"/>
+          <include name="setUp"/>
+          <include name="getResult"/>
+        </methods>
+      </class> <!-- OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass -->
+    </classes>
+  </test> <!-- WebService_Automation(failed) -->
+</suite> <!-- Failed suite [ERP_OCTS_Automation] -->
