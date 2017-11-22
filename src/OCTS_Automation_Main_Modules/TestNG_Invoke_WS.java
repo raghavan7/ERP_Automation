@@ -23,11 +23,11 @@ import org.testng.xml.XmlClass;
 import org.testng.xml.XmlSuite;
 import org.testng.xml.XmlTest;
 
-public class TestNG_Invoke_Financial_WS {
+public class TestNG_Invoke_WS {
 	 static String testFile;
 	 static String GIInterfaceFIle;
 	 
-	public void wstriggertestng(String testFile,String GIInterfaceFIle){
+	public String wstriggertestng(String testFile,String GIInterfaceFIle,String TestModule){
 //	public static void main(String[] args) {
 		 try {
 		        // testFile = args[0];
@@ -40,7 +40,8 @@ public class TestNG_Invoke_Financial_WS {
 		    }
 		
 		ArrayList<String> testcase=new ArrayList<String>();
-		testcase.add("OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass");
+		//testcase.add("OCTS_Automation_Main_Modules."+ERP_Financial_Webservice_MainClass");"
+		testcase.add("OCTS_Automation_Main_Modules."+TestModule);
 		  Integer numberOfHosts = 1;
 
 		    // Creating a new Suite
@@ -89,6 +90,8 @@ public class TestNG_Invoke_Financial_WS {
 		    System.out.println(suite.toXml());
 
 		    tng.run();
+		    
+			return "Completed";
 	}
 
 }

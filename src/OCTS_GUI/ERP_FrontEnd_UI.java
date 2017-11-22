@@ -17,7 +17,7 @@ import javax.swing.*;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import OCTS_Automation_Main_Modules.TestNG_Invoke_Financial_WS;
+import OCTS_Automation_Main_Modules.TestNG_Invoke_WS;
 import Common_Utility.Details;
 
 import java.awt.event.*;
@@ -42,6 +42,7 @@ public class ERP_FrontEnd_UI extends JFrame {
 */
 private static final long serialVersionUID = 1L;
 
+String testModule;
 private Image image = null;
 private String Filepath;
 String message;
@@ -89,6 +90,7 @@ File thedir3;
         
          //This will create the title you see in the upper left of the window    
         setTitle("ERP Automation");  
+        
         setSize(621,376); //set size so the user can "see" it
         Dimension objDimension = Toolkit.getDefaultToolkit().getScreenSize();
         int iCoordX = (objDimension.width - this.getWidth()) / 2;
@@ -210,10 +212,11 @@ File thedir3;
        		{
        			
        			//ERP_Webservice_MainDriver_Script ems = new ERP_Webservice_MainDriver_Script();
-       			TestNG_Invoke_Financial_WS wttn = new TestNG_Invoke_Financial_WS();
+       			TestNG_Invoke_WS wttn = new TestNG_Invoke_WS();
        			try {
 					//ems.ERPDriver(inputfile_fp,GIfile_fp);
-       				wttn.wstriggertestng(inputfile_fp, GIfile_fp);
+       				testModule = "ERP_Financial_Webservice_MainClass";
+       				wttn.wstriggertestng(inputfile_fp, GIfile_fp,testModule);
        				
        			/*	//call Webservice Jar file
        				ProcessBuilder pb = new ProcessBuilder("java", "-jar", "C:\\Users\\koushik\\Documents\\Triggerwebservice.jar "+ inputfile_fp + GIfile_fp ,">>" ,"C:\\Users\\koushik\\Documents\\log.txt");

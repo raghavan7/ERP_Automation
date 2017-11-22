@@ -18,12 +18,11 @@ package OCTS_GUI;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class MainUIFX extends Application {
-    
 
 	@SuppressWarnings("static-access")
 	@Override
@@ -38,8 +37,8 @@ public class MainUIFX extends Application {
 	    
         try{
             //FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            AnchorPane root = (AnchorPane) loader.load(getClass().getResource("/MainUIFX.fxml"));
-
+            //Parent root = loader.load(getClass().getResource("/MainUIFX.fxml"));
+           Parent root = loader.load(getClass().getResource("/SplashScreen.fxml"));
             // Create the Scene
        
             Scene scene = new Scene(root);
@@ -49,11 +48,16 @@ public class MainUIFX extends Application {
 		
        // Set the Title to the Stage
        primaryStage.setTitle("Oracle ERP Tool");
-		
+	
+       //Disable resize option
+       primaryStage.setResizable(false);
+       
        // Display the Stage
        primaryStage.show();
        
+       //Thread.sleep(7000);
        
+       //primaryStage.getScene().getWindow().hide();
         }
         catch (Exception e)
         {
