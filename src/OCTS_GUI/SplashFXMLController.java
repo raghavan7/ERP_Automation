@@ -44,7 +44,7 @@ public class SplashFXMLController implements Initializable {
     	@Override
     	public void run() {
     			try {
-					Thread.sleep(5000);
+					Thread.sleep(9400);
 				} catch (InterruptedException e1) {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();

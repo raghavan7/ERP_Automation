@@ -14,15 +14,12 @@
 package OCTS_GUI;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.animation.FadeTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.concurrent.Task;
@@ -35,9 +32,8 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.util.Duration;
 import OCTS_Automation_Main_Modules.TestNG_Invoke_WS;
 
 @SuppressWarnings("rawtypes")
@@ -52,7 +48,10 @@ public class FXMLController implements Initializable {
     
     
     @FXML
-    private AnchorPane root;
+    AnchorPane root;
+    
+    @FXML
+    Text textOutput;
     
     @FXML 
     ComboBox<String> comboBox;
@@ -220,6 +219,7 @@ public class FXMLController implements Initializable {
             	  System.out.println(output);
             	  outputTextScreen.appendText("Webservice Execution for Process: "+Item+" Completed"+newLine);
                   outputTextScreen.appendText("Please check the output result generate at : C:/Automation_OCTS/Results"+newLine);
+                  textOutput.setText("Test Execution Completed");
             	  return true;
               }
               return true;

@@ -2,16 +2,16 @@
 <testng-results skipped="0" failed="1" ignored="0" total="1" passed="0">
   <reporter-output>
   </reporter-output>
-  <suite name="ERP_OCTS_Automation" duration-ms="10698" started-at="2017-11-22T22:31:35Z" finished-at="2017-11-22T22:31:46Z">
+  <suite name="ERP_OCTS_Automation" duration-ms="9313" started-at="2017-11-22T23:40:05Z" finished-at="2017-11-22T23:40:15Z">
     <groups>
     </groups>
-    <test name="WebService_Automation" duration-ms="10698" started-at="2017-11-22T22:31:35Z" finished-at="2017-11-22T22:31:46Z">
+    <test name="WebService_Automation" duration-ms="9313" started-at="2017-11-22T23:40:05Z" finished-at="2017-11-22T23:40:15Z">
       <class name="OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass">
-        <test-method status="PASS" signature="setUp()[pri:0, instance:OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass@ce114e]" name="setUp" is-config="true" duration-ms="106" started-at="2017-11-22T14:31:35Z" finished-at="2017-11-22T14:31:35Z">
+        <test-method status="PASS" signature="setUp()[pri:0, instance:OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass@13cb68b]" name="setUp" is-config="true" duration-ms="119" started-at="2017-11-22T15:40:05Z" finished-at="2017-11-22T15:40:05Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUp -->
-        <test-method status="FAIL" signature="OracleCloud_Financial_Webservices(java.lang.String, java.lang.String)[pri:0, instance:OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass@ce114e]" name="OracleCloud_Financial_Webservices" duration-ms="10673" started-at="2017-11-22T14:31:35Z" finished-at="2017-11-22T14:31:46Z">
+        <test-method status="FAIL" signature="OracleCloud_Financial_Webservices(java.lang.String, java.lang.String)[pri:0, instance:OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass@13cb68b]" name="OracleCloud_Financial_Webservices" duration-ms="9288" started-at="2017-11-22T15:40:05Z" finished-at="2017-11-22T15:40:15Z">
           <params>
             <param index="0">
               <value>
@@ -64,18 +64,18 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- OracleCloud_Financial_Webservices -->
-        <test-method status="PASS" signature="getResult(org.testng.ITestResult)[pri:0, instance:OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass@ce114e]" name="getResult" is-config="true" duration-ms="5" started-at="2017-11-22T14:31:46Z" finished-at="2017-11-22T14:31:46Z">
+        <test-method status="PASS" signature="getResult(org.testng.ITestResult)[pri:0, instance:OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass@13cb68b]" name="getResult" is-config="true" duration-ms="11" started-at="2017-11-22T15:40:15Z" finished-at="2017-11-22T15:40:15Z">
           <params>
             <param index="0">
               <value>
-                <![CDATA[[TestResult name=OracleCloud_Financial_Webservices status=FAILURE method=ERP_Financial_Webservice_MainClass.OracleCloud_Financial_Webservices(java.lang.String, java.lang.String)[pri:0, instance:OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass@ce114e] output={null}]]]>
+                <![CDATA[[TestResult name=OracleCloud_Financial_Webservices status=FAILURE method=ERP_Financial_Webservice_MainClass.OracleCloud_Financial_Webservices(java.lang.String, java.lang.String)[pri:0, instance:OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass@13cb68b] output={null}]]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- getResult -->
-        <test-method status="PASS" signature="tearDown()[pri:0, instance:OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass@ce114e]" name="tearDown" is-config="true" duration-ms="257" started-at="2017-11-22T14:31:46Z" finished-at="2017-11-22T14:31:46Z">
+        <test-method status="PASS" signature="tearDown()[pri:0, instance:OCTS_Automation_Main_Modules.ERP_Financial_Webservice_MainClass@13cb68b]" name="tearDown" is-config="true" duration-ms="294" started-at="2017-11-22T15:40:15Z" finished-at="2017-11-22T15:40:15Z">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDown -->

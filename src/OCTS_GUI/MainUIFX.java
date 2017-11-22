@@ -32,14 +32,11 @@ public class MainUIFX extends Application {
         // Create the FXMLLoader 
 		FXMLLoader loader = new FXMLLoader();
 		
-        // Path to the FXML File
-	    //String fxmlDocPath = "C:\\Users\\rrama3\\Desktop\\Oracle_Cloud_Automation\\Code\\11_20\\ERPAutomation-master\\resources\\MainUIFX.fxml";
-	    
         try{
-            //FileInputStream fxmlStream = new FileInputStream(fxmlDocPath);
-            //Parent root = loader.load(getClass().getResource("/MainUIFX.fxml"));
+           
            Parent root = loader.load(getClass().getResource("/SplashScreen.fxml"));
-            // Create the Scene
+           
+           // Create the Scene
        
             Scene scene = new Scene(root);
 		
