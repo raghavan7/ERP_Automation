@@ -7,7 +7,6 @@
   <test name="Test">
    <classes>
    <class name="ERP_Automation.ERP_FrontEnd_Template"/>
-     
     </classes>
   </test> <!-- Test -->
 </suite> <!-- Suite -->
