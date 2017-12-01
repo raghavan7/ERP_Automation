@@ -14,11 +14,20 @@
 package OCTS_GUI;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import org.apache.commons.io.FileUtils;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import Common_Utility.CommonUtilFunctions;
+import Common_Utility.ReporterBaseTest;
 import Common_Utility.XmlToExcelConverter;
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
@@ -36,10 +45,10 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import OCTS_Automation_Main_Modules.TestNG_Invoke_WS;
-import OCTS_Financial_Webservice.ERP_executeXMLQuery;
-import OCTS_Financial_Webservice.ERP_getSessionID;
+import OCTS_HCM_Webservices.ERP_executeXMLQuery;
+import OCTS_HCM_Webservices.ERP_getSessionID;
 
-@SuppressWarnings({ "rawtypes", "static-access" })
+@SuppressWarnings({ "rawtypes", "deprecation" })
 public class FXMLController implements Initializable {
 
 	String inputfile_fp;
@@ -51,7 +60,10 @@ public class FXMLController implements Initializable {
 	String sessionID;
 	String xml;
 	String rows;
-	
+	String[] ar;
+	FileInputStream file = null;
+	XSSFWorkbook workbook;
+
 	@FXML
 	AnchorPane root;
 
@@ -92,6 +104,9 @@ public class FXMLController implements Initializable {
 	Button sync2;
 
 	@FXML
+	Button validSync;
+
+	@FXML
 	TextField filePath1;
 
 	@FXML
@@ -102,7 +117,6 @@ public class FXMLController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL url, ResourceBundle rb) {
-		// loadSplashScreen();
 		List<String> list = new ArrayList<String>();
 		list.add("HCM->Employee");
 		list.add("HCM->Benefit");
@@ -112,6 +126,77 @@ public class FXMLController implements Initializable {
 		list.add("Finance->General_Ledger");
 		ObservableList<String> obList = FXCollections.observableList(list);
 		comboBox.setItems(obList);
+		ReporterBaseTest initFolder = new ReporterBaseTest();
+		initFolder.folderCreate();
+	}
+
+	public void setCombo() {
+		Item = comboBox.getValue();
+		System.out.println(Item);
+		outputTextScreen.appendText("Process Selected : " + Item + newLine);
+		if (Item.contains("HCM")) {
+			sync1.setDisable(false);
+			sync2.setDisable(true);
+			if (Item.equals("HCM->Employee")) {
+				testModule = "";
+			} else if (Item.equals("HCM->Benefit")) {
+				testModule = "";
+			} else {
+				testModule = "";
+			}
+		} else if (Item.contains("Finance")) {
+			sync1.setDisable(true);
+			sync2.setDisable(false);
+			if (Item.equals("Finance->Accounts_Payable")) {
+				testModule = "";
+			} else if (Item.equals("Finance->Accounts_Receivable")) {
+				testModule = "";
+			} else {
+				testModule = "ERP_Financial_Webservice_MainClass";
+			}
+		}
+	}
+
+	@FXML
+	public void syncButton1(ActionEvent event) {
+		ERP_getSessionID sessID = new ERP_getSessionID();
+		ERP_executeXMLQuery getXML = new ERP_executeXMLQuery();
+		XmlToExcelConverter conv = new XmlToExcelConverter();
+
+		try {
+			ar = readExcel();
+			sessionID = sessID.getSessionID(ar[0], ar[1]);
+			xml = getXML.getXMLQuery(sessionID);
+			xml = xml.substring(0, xml.length() - 11);
+			FileUtils.writeStringToFile(new File("C:\\Automation_OCTS\\Output\\HCM_Employee_Output.xml"), xml);
+			rows = conv.getAndReadXml("C:\\Automation_OCTS\\Output", xml);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if (sessionID.contains("Error") || xml.contains("Error") || rows.contains("Error")) {
+			outputTextScreen.appendText(newLine + sessionID + newLine);
+			outputTextScreen.appendText(newLine + xml + newLine);
+			outputTextScreen.appendText(newLine + rows + newLine);
+			outputTextScreen.appendText(newLine + "HCM Sync Failed" + newLine);
+		} else {
+			outputTextScreen.appendText(newLine + rows + newLine);
+			outputTextScreen.appendText("HCM Sync Complete" + newLine);
+			validSync.setDisable(false);
+		}
+
+	}
+
+	@FXML
+	public void syncButton2(ActionEvent event) {
+		validSync.setDisable(false);
+		outputTextScreen.appendText(newLine + "ERP Sync Complete" + newLine);
+	}
+
+	@FXML
+	public void validButton(ActionEvent event) {
+		// TODO
+		fileButton1.setDisable(false);
+		outputTextScreen.appendText(newLine + "Sync Validation Complete" + newLine);
 	}
 
 	public void selectFilePath1(ActionEvent event) {
@@ -157,68 +242,6 @@ public class FXMLController implements Initializable {
 		executeWS.setDisable(false);
 	}
 
-	@FXML
-	public void syncButton1(ActionEvent event) {
-		// TODO
-		fileButton1.setDisable(false);
-		outputTextScreen.appendText(newLine + "HCM Sync Complete" + newLine);
-	}
-
-	@FXML
-	public void syncButton2(ActionEvent event) {
-		ERP_getSessionID sessID = new ERP_getSessionID();
-		ERP_executeXMLQuery getXML = new ERP_executeXMLQuery();
-		XmlToExcelConverter conv = new XmlToExcelConverter();
-
-		try {
-			sessionID = sessID.getSessionID("237917", "Fusion321");
-			xml = getXML.getXMLQuery(sessionID);
-			xml = xml.substring(0, xml.length() - 11);
-			rows = conv.getAndReadXml("C:\\Automation_OCTS\\Data", xml);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		if (sessionID.contains("Error") || xml.contains("Error")|| rows.contains("Error")) {
-			outputTextScreen.appendText(newLine + sessionID + newLine);
-			outputTextScreen.appendText(newLine + xml + newLine);
-			outputTextScreen.appendText(newLine + rows + newLine);
-			outputTextScreen.appendText(newLine + "ERP Sync Failed" + newLine);
-		}
-		else 
-		{
-			outputTextScreen.appendText(newLine + rows + newLine);
-			outputTextScreen.appendText("ERP Sync Complete" + newLine);
-			fileButton1.setDisable(false);
-		}
-	}
-
-	public void setCombo() {
-		Item = comboBox.getValue();
-		System.out.println(Item);
-		outputTextScreen.appendText("Process Selected : " + Item + newLine);
-		if (Item.contains("HCM")) {
-			sync1.setDisable(false);
-			sync2.setDisable(true);
-			if (Item.equals("HCM->Employee")) {
-				testModule = "";
-			} else if (Item.equals("HCM->Benefit")) {
-				testModule = "";
-			} else {
-				testModule = "";
-			}
-		} else if (Item.contains("Finance")) {
-			sync1.setDisable(true);
-			sync2.setDisable(false);
-			if (Item.equals("Finance->Accounts_Payable")) {
-				testModule = "";
-			} else if (Item.equals("Finance->Accounts_Receivable")) {
-				testModule = "";
-			} else {
-				testModule = "ERP_Financial_Webservice_MainClass";
-			}
-		}
-	}
-
 	public Task createWorker() {
 		return new Task() {
 			@Override
@@ -240,16 +263,31 @@ public class FXMLController implements Initializable {
 		};
 	}
 
-	/*
-	 * public void loadSplashScreen() { try { StackPane pane = (StackPane)
-	 * FXMLLoader.load(getClass().getResource("/SplashScreen.fxml"));
-	 * root.getChildren().setAll(pane); FadeTransition fadeIn = new
-	 * FadeTransition(Duration.seconds(3),pane); fadeIn.setFromValue(0);
-	 * fadeIn.setToValue(1); fadeIn.setCycleCount(1); fadeIn.play();
-	 * 
-	 * } catch (IOException e) { // TODO Auto-generated catch block
-	 * e.printStackTrace(); }
-	 * 
-	 * }
-	 */
+	public String[] readExcel() throws Exception {
+		try {
+			ar = new String[2];
+			file = new FileInputStream(new File("C:\\Automation_OCTS\\Data\\ERP_InputDatasheet.xlsx"));
+			workbook = new XSSFWorkbook(file);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		CommonUtilFunctions cu = new CommonUtilFunctions();
+		XSSFSheet ips1 = workbook.getSheetAt(0);
+		for (int currentColumnNum = 0; currentColumnNum < 1; currentColumnNum++) {
+			for (int currentRowNum = ips1.getFirstRowNum() + 1; currentRowNum <= ips1
+					.getLastRowNum(); currentRowNum++) {
+				System.out.println("RowNum" + currentRowNum);
+
+				ArrayList<Cell> cells_uUserName = cu.columnIdentification("UserName", ips1);
+				System.out.println(cells_uUserName);
+				ar[0] = cu.getCellFormattedStringValue(cells_uUserName.get(currentRowNum), workbook);
+
+				ArrayList<Cell> cells_uPassword = cu.columnIdentification("Password", ips1);
+				System.out.println(cells_uPassword);
+				ar[1] = cu.getCellFormattedStringValue(cells_uPassword.get(currentRowNum), workbook);
+
+			}
+		}
+		return ar;
+	}
 }

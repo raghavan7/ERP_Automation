@@ -39,12 +39,17 @@
       <AnchorPane layoutX="16.0" layoutY="194.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="182.0" prefWidth="292.0">
          <children>
             <ComboBox fx:id="comboBox" layoutY="30.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onAction="#setCombo" prefHeight="41.0" prefWidth="277.0" promptText="                    Select Module-&gt;Process" AnchorPane.bottomAnchor="111.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="30.0" />
-            <Button fx:id="sync1" disable="true" layoutX="20.0" layoutY="125.0" mnemonicParsing="false" onAction="#syncButton1" prefHeight="33.0" prefWidth="112.0" style="-fx-background-radius: 10EM;" text=" Sync HCM">
+            <Button fx:id="sync1" disable="true" layoutX="14.0" layoutY="92.0" mnemonicParsing="false" onAction="#syncButton1" prefHeight="33.0" prefWidth="112.0" style="-fx-background-radius: 10EM;" text=" Sync HCM">
                <font>
                   <Font name="Times New Roman Bold" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="sync2" disable="true" layoutX="169.0" layoutY="125.0" mnemonicParsing="false" onAction="#syncButton2" prefHeight="33.0" prefWidth="102.0" style="-fx-background-radius: 10EM;" text=" Sync ERP">
+            <Button fx:id="sync2" disable="true" layoutX="169.0" layoutY="92.0" mnemonicParsing="false" onAction="#syncButton2" prefHeight="33.0" prefWidth="102.0" style="-fx-background-radius: 10EM;" text=" Sync ERP">
+               <font>
+                  <Font name="Times New Roman Bold" size="15.0" />
+               </font>
+            </Button>
+            <Button fx:id="validSync" disable="true" layoutX="90.0" layoutY="154.0" mnemonicParsing="false" onAction="#validButton" prefHeight="28.0" prefWidth="112.0" style="-fx-background-radius: 10EM;" text="Validate Sync">
                <font>
                   <Font name="Times New Roman Bold" size="15.0" />
                </font>

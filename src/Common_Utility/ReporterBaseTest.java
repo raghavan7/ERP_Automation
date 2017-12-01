@@ -58,36 +58,39 @@ public class ReporterBaseTest {
         htmlReporter.config().setReportName("Test Report");
         htmlReporter.config().setTestViewChartLocation(ChartLocation.TOP);
         htmlReporter.config().setTheme(Theme.STANDARD);
-        
-        thedir  = new File("C:\\Automation_OCTS\\");
-   		thedir1 = new File("C:\\Automation_OCTS\\Data");
-   		thedir2 = new File("C:\\Automation_OCTS\\Output");
-   		thedir3 = new File("C:\\Automation_OCTS\\Results");
-   		if(!thedir.exists() && !thedir1.exists() && !thedir2.exists() && !thedir3.exists())
-   		{
-   			boolean result = false;
-   			
-   			try
-   			{
-   				thedir.mkdir();
-   				thedir1.mkdir();
-   				thedir2.mkdir();
-   				thedir3.mkdir();
-   				result=true;
-   				System.out.println("Folder Created");
-   			}
-   			catch(SecurityException se)
-   			{
-   				//handle it
-   				se.printStackTrace();
-   			}
-   			if(result)
-   			{
-   				System.out.println("Base directory created");
-   			}
-    }
+    
     }
      
+    public void folderCreate() {
+    	 thedir  = new File("C:\\Automation_OCTS\\");
+    		thedir1 = new File("C:\\Automation_OCTS\\Data");
+    		thedir2 = new File("C:\\Automation_OCTS\\Output");
+    		thedir3 = new File("C:\\Automation_OCTS\\Results");
+    		if(!thedir.exists() && !thedir1.exists() && !thedir2.exists() && !thedir3.exists())
+    		{
+    			boolean result = false;
+    			
+    			try
+    			{
+    				thedir.mkdir();
+    				thedir1.mkdir();
+    				thedir2.mkdir();
+    				thedir3.mkdir();
+    				result=true;
+    				System.out.println("Folder Created");
+    			}
+    			catch(SecurityException se)
+    			{
+    				//handle it
+    				se.printStackTrace();
+    			}
+    			if(result)
+    			{
+    				System.out.println("Base directory created");
+    			}
+     }
+    }
+    
     @AfterMethod
     public void getResult(ITestResult result)
     {

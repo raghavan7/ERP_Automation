@@ -140,10 +140,7 @@ public class ERP_Financial_Webservice_MainClass extends ReporterBaseTest {
 				     throw new Exception(e1);
 		          }
            XSSFSheet ips1 = workbook.getSheetAt(0);
-           //System.out.println("FirstRowNum"+ips1.getFirstRowNum());
-           //System.out.println("LastRowNum"+ips1.getLastRowNum());
-           //
-       //    XSSFRow row = ips1.getRow(0);
+           
            CommonUtilFunctions cu = new CommonUtilFunctions();
            for (int currentColumnNum = 0; currentColumnNum < 1; currentColumnNum++)
            {

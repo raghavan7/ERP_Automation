@@ -1,4 +1,17 @@
-package OCTS_Financial_Webservice;
+/*===============================================================================================================================
+        CLASS Name:    ERP_getSessionID
+        CREATED BY:    Raghavendran Ramasubramanian
+        DATE CREATED:  Nov 2017
+        DESCRIPTION:   Method to trigger ERP_getSessionID webservice               
+        PARAMETERS:                                                                  
+        RETURNS:      
+        COMMENTS:                                     
+        Modification Log:
+        Date                             Initials                                                Modification
+        
+-------------         ------------    ------------------------------------------------------------------------------------------------------------------------------*/
+
+package OCTS_HCM_Webservices;
 
 import javax.xml.soap.MessageFactory;
 import javax.xml.soap.SOAPBody;
