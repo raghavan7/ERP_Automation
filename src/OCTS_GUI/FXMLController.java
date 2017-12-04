@@ -167,8 +167,7 @@ public class FXMLController implements Initializable {
 		ERP_getSessionID sessID = new ERP_getSessionID();
 		ERP_executeXMLQuery getXML = new ERP_executeXMLQuery();
 		XmlToExcelConverter conv = new XmlToExcelConverter();
-        TextToExcel tte = new TextToExcel();
-        CompareExcel ce = new CompareExcel();
+		TextToExcel tte = new TextToExcel();
 		try {
 			File1 = chooseFile();
 			if (!(File1 == null))
@@ -180,7 +179,6 @@ public class FXMLController implements Initializable {
 			FileUtils.writeStringToFile(new File("C:\\Automation_OCTS\\Data\\HCM_Employee_Output.xml"), xml);
 			rows = conv.getAndReadXml(xml);
 			txt2excel = tte.readTextFile(File1);
-			cmpxls = ce.readXLSXFile();
 			}
 			else
 			{
@@ -190,18 +188,16 @@ public class FXMLController implements Initializable {
 			e.printStackTrace();
 			outputTextScreen.appendText(newLine + e + newLine);
 		}
-		if (sessionID.contains("Error") || xml.contains("Error") || rows.contains("Error") || rows.contains("0 Rows")|| txt2excel.contains("Error") || cmpxls.contains("Error")) {
+		if (sessionID.contains("Error") || xml.contains("Error") || rows.contains("Error") || txt2excel.contains("Error") || rows.contains("0 Rows")) {
 			outputTextScreen.appendText(newLine + "Session ID: " + sessionID + newLine);
 			outputTextScreen.appendText(newLine + "HCM Sync xml: " +xml + newLine);
 			outputTextScreen.appendText(newLine + "Xml To Excel: " +rows + newLine);
 			outputTextScreen.appendText(newLine + txt2excel + newLine);
-			outputTextScreen.appendText(newLine + cmpxls + newLine);
 			outputTextScreen.appendText(newLine + "HCM Sync Failed" + newLine);
 		} else {
-			outputTextScreen.appendText(newLine + rows + newLine);
+			outputTextScreen.appendText(newLine + "Xml To Excel: " +rows + newLine);
 			outputTextScreen.appendText(newLine + txt2excel + newLine);
-			outputTextScreen.appendText(newLine + cmpxls + newLine);
-			outputTextScreen.appendText("HCM Sync Complete" + newLine);
+			outputTextScreen.appendText(newLine + "HCM Sync Complete" + newLine);
 			validSync.setDisable(false);
 		}
 
@@ -215,9 +211,29 @@ public class FXMLController implements Initializable {
 
 	@FXML
 	public void validButton(ActionEvent event) {
-		// TODO
-		fileButton1.setDisable(false);
-		outputTextScreen.appendText(newLine + "Sync Validation Complete" + newLine);
+       if(Item.contains("HCM"))
+       {
+		CompareExcel ce = new CompareExcel();
+        try {		
+			cmpxls = ce.readXLSXFile();
+		} catch (Exception e) {
+			e.printStackTrace();
+			outputTextScreen.appendText(newLine + e + newLine);
+		}
+		if (cmpxls.contains("Error")) {
+			outputTextScreen.appendText(newLine + cmpxls + newLine);
+			outputTextScreen.appendText(newLine + "Sync Validation Failed" + newLine);
+		} else {
+			
+			outputTextScreen.appendText(newLine + cmpxls + newLine);
+			outputTextScreen.appendText(newLine + "Sync Validation Passed" + newLine);
+			fileButton1.setDisable(false);
+		}
+       }
+       else
+       {
+    	   fileButton1.setDisable(false);
+       }
 	}
 
 	public void selectFilePath1(ActionEvent event) {
@@ -257,10 +273,15 @@ public class FXMLController implements Initializable {
 		executeWS.setDisable(true);
 		progressBar.setProgress(0);
 		copyWorker = createWorker();
-		progressBar.progressProperty().unbind();
-		progressBar.progressProperty().bind(copyWorker.progressProperty());
-		new Thread(copyWorker).start();
-		executeWS.setDisable(false);
+		if(testModule != "") {
+			progressBar.progressProperty().unbind();
+			progressBar.progressProperty().bind(copyWorker.progressProperty());
+			new Thread(copyWorker).start();
+			executeWS.setDisable(false);
+		}
+		else {
+			outputTextScreen.appendText("Webservice Execution for Process: " + Item + " do not have any current TestMethods to Call, Hence stopping the test" + newLine);
+		}
 	}
 
 	public Task createWorker() {

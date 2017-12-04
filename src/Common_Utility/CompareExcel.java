@@ -40,9 +40,10 @@ public class CompareExcel {
 			ArrayList arrayList1 = new ArrayList();
 
 			int row_number2 = sheet2.getPhysicalNumberOfRows();
-
+			int column_number2 = sheet2.getRow(0).getPhysicalNumberOfCells();
+			
 			if (!(row_number1 == 1 || row_number2 == 1)) {
-				int column_number2 = sheet2.getRow(0).getPhysicalNumberOfCells();
+				
 
 				// System.out.println("value of rowcount is " +row_number);
 				// Iterator rows = sheet1.rowIterator();
@@ -64,7 +65,7 @@ public class CompareExcel {
 
 				int g;
 				int a = 0;
-				for (g = 0; g < column_number1; g++)
+				for (g = 0; g < column_number2; g++)
 
 				{
 					// System.out.println("coul number " +column_number1);
@@ -102,10 +103,8 @@ public class CompareExcel {
 				// Collections.reverse(arrayList1);
 				for (int c = 0; c < retval; c++) {
 					System.out.println("Person" + " " + arrayList1.get(c) + " is already present in Source file ");
-					
 					person = person +" , " + arrayList1.get(c);
 				}
-                person = person.substring(2, person.length());
 				wb1.close();
 				wb2.close();
 			} else {
@@ -115,9 +114,12 @@ public class CompareExcel {
 			e.printStackTrace();
 			return "Error:" + e;
 		}
-		if (person != null) {
-			return "Error: Duplicates Records Found for : " + person + " PersonNumber is already present in HCM system";
+		if (person != "") {
+			person = person.substring(2, person.length());
+			System.out.println("Error: Duplicates Records Found for : " + person + " PersonNumber(s) already present in HCM system");
+			return "Error: Duplicates Records Found for : " + person + " PersonNumber(s) already present in HCM system";
 		} else {
+			System.out.println("No Duplicates Found");
 			return "Comparing Completed: No Duplicates found";
 		}
 
