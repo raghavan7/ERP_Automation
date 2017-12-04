@@ -29,16 +29,16 @@ import java.io.FileOutputStream;
 import java.io.StringReader;
 
 public class XmlToExcelConverter {
-	private static Workbook workbook;
+	private static XSSFWorkbook workbook;
 	private static int rowNum;
 
-	private final static int RowNo = 0;
-	private final static int Column00 = 1;
-	private final static int Column01 = 2;
-	private final static int Column02 = 3;
+	//private final static int RowNo = 0;
+	private final static int Column00 = 0;
+	private final static int Column01 = 1;
+	private final static int Column02 = 2;
     String result;
 	
-	public String getAndReadXml(String filepath,String xml) throws Exception {
+	public String getAndReadXml(String xml) throws Exception {
 		NodeList nList;
 		try {
 			System.out.println("getAndReadXml");
@@ -75,10 +75,10 @@ public class XmlToExcelConverter {
 					String column2 = element.getElementsByTagName("Column2").item(0).getTextContent();
 
 							Row row = sheet.createRow(rowNum++);
-							Cell cell = row.createCell(RowNo);
-							cell.setCellValue("RowNo:"+(i+1));
+							/*Cell cell = row.createCell(RowNo);
+							cell.setCellValue("RowNo:"+(i+1));*/
 
-							cell = row.createCell(Column00);
+							Cell cell = row.createCell(Column00);
 							cell.setCellValue(column0);
 
 							cell = row.createCell(Column01);
@@ -90,7 +90,7 @@ public class XmlToExcelConverter {
 						}
 					}
 				
-			FileOutputStream fileOut = new FileOutputStream(filepath+"\\ExcelOut.xlsx");
+			FileOutputStream fileOut = new FileOutputStream("C:\\Automation_OCTS\\Output\\HCMSyncTestData.xlsx");
 			workbook.write(fileOut);
 			workbook.close();
 			fileOut.close();
@@ -127,20 +127,20 @@ public class XmlToExcelConverter {
 		Sheet sheet = workbook.createSheet();
 		rowNum = 0;
 		Row row = sheet.createRow(rowNum++);
-		Cell cell = row.createCell(RowNo);
+		/*Cell cell = row.createCell(RowNo);
 		cell.setCellValue("RowNo");
-		cell.setCellStyle(style);
+		cell.setCellStyle(style);*/
 
-		cell = row.createCell(Column00);
-		cell.setCellValue("Person Number");
+		Cell cell = row.createCell(Column00);
+		cell.setCellValue("PersonNumber");
 		cell.setCellStyle(style);
 
 		cell = row.createCell(Column01);
-		cell.setCellValue("National ID");
+		cell.setCellValue("NationalID");
 		cell.setCellStyle(style);
 
 		cell = row.createCell(Column02);
-		cell.setCellValue("Person Type");
+		cell.setCellValue("PersonType");
 		cell.setCellStyle(style);
 
 	}

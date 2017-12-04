@@ -27,7 +27,9 @@ import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import Common_Utility.CommonUtilFunctions;
+import Common_Utility.CompareExcel;
 import Common_Utility.ReporterBaseTest;
+import Common_Utility.TextToExcel;
 import Common_Utility.XmlToExcelConverter;
 import javafx.fxml.FXML;
 import javafx.collections.FXCollections;
@@ -61,6 +63,9 @@ public class FXMLController implements Initializable {
 	String xml;
 	String rows;
 	String[] ar;
+	String txt2excel;
+	String File1;
+	String cmpxls;
 	FileInputStream file = null;
 	XSSFWorkbook workbook;
 
@@ -162,24 +167,40 @@ public class FXMLController implements Initializable {
 		ERP_getSessionID sessID = new ERP_getSessionID();
 		ERP_executeXMLQuery getXML = new ERP_executeXMLQuery();
 		XmlToExcelConverter conv = new XmlToExcelConverter();
-
+        TextToExcel tte = new TextToExcel();
+        CompareExcel ce = new CompareExcel();
 		try {
+			File1 = chooseFile();
+			if (!(File1 == null))
+			{
 			ar = readExcel();
 			sessionID = sessID.getSessionID(ar[0], ar[1]);
 			xml = getXML.getXMLQuery(sessionID);
 			xml = xml.substring(0, xml.length() - 11);
-			FileUtils.writeStringToFile(new File("C:\\Automation_OCTS\\Output\\HCM_Employee_Output.xml"), xml);
-			rows = conv.getAndReadXml("C:\\Automation_OCTS\\Output", xml);
+			FileUtils.writeStringToFile(new File("C:\\Automation_OCTS\\Data\\HCM_Employee_Output.xml"), xml);
+			rows = conv.getAndReadXml(xml);
+			txt2excel = tte.readTextFile(File1);
+			cmpxls = ce.readXLSXFile();
+			}
+			else
+			{
+				throw new Exception("No Input Test File has been selected, Please click on Sync HCM button again to select a File");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			outputTextScreen.appendText(newLine + e + newLine);
 		}
-		if (sessionID.contains("Error") || xml.contains("Error") || rows.contains("Error")) {
-			outputTextScreen.appendText(newLine + sessionID + newLine);
-			outputTextScreen.appendText(newLine + xml + newLine);
-			outputTextScreen.appendText(newLine + rows + newLine);
+		if (sessionID.contains("Error") || xml.contains("Error") || rows.contains("Error") || rows.contains("0 Rows")|| txt2excel.contains("Error") || cmpxls.contains("Error")) {
+			outputTextScreen.appendText(newLine + "Session ID: " + sessionID + newLine);
+			outputTextScreen.appendText(newLine + "HCM Sync xml: " +xml + newLine);
+			outputTextScreen.appendText(newLine + "Xml To Excel: " +rows + newLine);
+			outputTextScreen.appendText(newLine + txt2excel + newLine);
+			outputTextScreen.appendText(newLine + cmpxls + newLine);
 			outputTextScreen.appendText(newLine + "HCM Sync Failed" + newLine);
 		} else {
 			outputTextScreen.appendText(newLine + rows + newLine);
+			outputTextScreen.appendText(newLine + txt2excel + newLine);
+			outputTextScreen.appendText(newLine + cmpxls + newLine);
 			outputTextScreen.appendText("HCM Sync Complete" + newLine);
 			validSync.setDisable(false);
 		}
@@ -203,7 +224,7 @@ public class FXMLController implements Initializable {
 		outputTextScreen.appendText(newLine);
 		fileButton1.setDisable(true);
 		FileChooser chooser = new FileChooser();
-		File file = new File(System.getProperty("user.dir"));
+		File file = new File("C:\\Automation_OCTS\\");
 		chooser.setInitialDirectory(file);
 		file = chooser.showOpenDialog(fileButton1.getParent().getScene().getWindow());
 		inputfile_fp = file.getPath();
@@ -216,7 +237,7 @@ public class FXMLController implements Initializable {
 	public void selectFilePath2(ActionEvent event) {
 		fileButton2.setDisable(true);
 		FileChooser chooser = new FileChooser();
-		File file = new File(System.getProperty("user.dir"));
+		File file = new File("C:\\Automation_OCTS\\");
 		chooser.setInitialDirectory(file);
 		file = chooser.showOpenDialog(fileButton2.getParent().getScene().getWindow());
 		GIfile_fp = file.getPath();
@@ -289,5 +310,24 @@ public class FXMLController implements Initializable {
 			}
 		}
 		return ar;
+	}
+	
+	public String chooseFile() {
+		FileChooser chooser = new FileChooser();
+		File file = new File("C:\\Automation_OCTS\\");
+		chooser.setInitialDirectory(file);
+		file = chooser.showOpenDialog(fileButton1.getParent().getScene().getWindow());
+		
+		if (file == null)
+		{
+			return null;
+		}
+		else
+		{
+			File1 = file.getPath();
+			return File1;	
+		}
+		
+		
 	}
 }
