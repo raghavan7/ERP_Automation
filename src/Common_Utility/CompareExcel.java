@@ -11,7 +11,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 public class CompareExcel {
 	String person = "";
 
-	@SuppressWarnings({ "rawtypes", "unused", "unchecked", "resource" })
+	@SuppressWarnings({ "rawtypes", "unchecked", "resource" })
 	public String readXLSXFile() {
 
 		try {
