@@ -142,6 +142,9 @@ public class FXMLController implements Initializable {
 		if (Item.contains("HCM")) {
 			sync1.setDisable(false);
 			sync2.setDisable(true);
+			validSync.setDisable(true);
+			fileButton1.setDisable(true);
+			fileButton2.setDisable(true);
 			if (Item.equals("HCM->Employee")) {
 				testModule = "";
 			} else if (Item.equals("HCM->Benefit")) {
@@ -152,6 +155,9 @@ public class FXMLController implements Initializable {
 		} else if (Item.contains("Finance")) {
 			sync1.setDisable(true);
 			sync2.setDisable(false);
+			validSync.setDisable(true);
+			fileButton1.setDisable(true);
+			fileButton2.setDisable(true);
 			if (Item.equals("Finance->Accounts_Payable")) {
 				testModule = "";
 			} else if (Item.equals("Finance->Accounts_Receivable")) {
@@ -164,6 +170,7 @@ public class FXMLController implements Initializable {
 
 	@FXML
 	public void syncButton1(ActionEvent event) {
+		outputTextScreen.appendText(newLine + "HCM Sync Inprogress..." + newLine);
 		ERP_getSessionID sessID = new ERP_getSessionID();
 		ERP_executeXMLQuery getXML = new ERP_executeXMLQuery();
 		XmlToExcelConverter conv = new XmlToExcelConverter();
@@ -205,6 +212,7 @@ public class FXMLController implements Initializable {
 
 	@FXML
 	public void syncButton2(ActionEvent event) {
+		outputTextScreen.appendText(newLine + "ERP Sync Inprogress..." + newLine);
 		validSync.setDisable(false);
 		outputTextScreen.appendText(newLine + "ERP Sync Complete" + newLine);
 	}
@@ -233,34 +241,49 @@ public class FXMLController implements Initializable {
        else
        {
     	   fileButton1.setDisable(false);
+    	   outputTextScreen.appendText(newLine + "Sync Validation Passed" + newLine);
        }
 	}
 
-	public void selectFilePath1(ActionEvent event) {
+	public void selectFilePath1(ActionEvent event) throws Exception {
 		outputTextScreen.appendText(newLine);
 		fileButton1.setDisable(true);
-		FileChooser chooser = new FileChooser();
-		File file = new File("C:\\Automation_OCTS\\");
-		chooser.setInitialDirectory(file);
-		file = chooser.showOpenDialog(fileButton1.getParent().getScene().getWindow());
-		inputfile_fp = file.getPath();
+			File1 = chooseFile();
+			if (!(File1 == null))
+			{
+		inputfile_fp = File1;
 		filePath1.setText(inputfile_fp);
 		outputTextScreen.appendText("Test Excel Sheet Selected: " + inputfile_fp + newLine);
 		fileButton1.setDisable(false);
 		fileButton2.setDisable(false);
+			}
+			else
+			{
+				fileButton1.setDisable(false);
+				outputTextScreen.appendText(newLine + "No Test Case Sheet has been selected, Please click on Browse button again to select a File" + newLine);
+				throw new Exception("No Test Case Sheet has been selected, Please click on Browse button again to select a File");
+				
+			}
+			
 	}
 
-	public void selectFilePath2(ActionEvent event) {
+	public void selectFilePath2(ActionEvent event) throws Exception {
 		fileButton2.setDisable(true);
-		FileChooser chooser = new FileChooser();
-		File file = new File("C:\\Automation_OCTS\\");
-		chooser.setInitialDirectory(file);
-		file = chooser.showOpenDialog(fileButton2.getParent().getScene().getWindow());
-		GIfile_fp = file.getPath();
+		File1 = chooseFile();
+		if (!(File1 == null))
+		{
+		GIfile_fp = File1;
 		filePath2.setText(GIfile_fp);
 		outputTextScreen.appendText("Process Related Test Data Selected: " + GIfile_fp + newLine);
 		fileButton2.setDisable(false);
 		executeWS.setDisable(false);
+		}
+		else
+		{
+			fileButton2.setDisable(false);
+			outputTextScreen.appendText(newLine + "No Process Test Data has been selected, Please click on Browse button again to select a File" + newLine);
+			throw new Exception("No Process Test Data has been selected, Please click on Browse button again to select a File");
+		}
 	}
 
 	/**
