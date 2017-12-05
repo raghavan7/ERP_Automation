@@ -18,6 +18,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 public class MainUIFX extends Application {
@@ -40,12 +41,16 @@ public class MainUIFX extends Application {
 			// Set the Scene to the Stage
 			primaryStage.setScene(scene);
 
+			primaryStage.getIcons().add(new Image(MainUIFX.class.getResourceAsStream("/cloud.png")));
+			
 			// Set the Title to the Stage
 			primaryStage.setTitle("Oracle ERP Tool");
 
 			// Disable resize option
 			primaryStage.setResizable(false);
 
+			
+			
 			// Display the Stage
 			primaryStage.show();
 
